@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <title>SkolaWTF</title>
     <style>
-        body {
+        body, html {
             margin: 0;
+            padding: 0;
             overflow: hidden;
+            height: 100%;
+            background-color: black;
         }
 
         .iframe-wrapper {
             position: relative;
             width: 100vw;
             height: 100vh;
-            border: none;
         }
 
         iframe {
@@ -30,17 +32,46 @@
             height: 100%;
             cursor: pointer;
             z-index: 10;
-            background-color: transparent;
+        }
+
+        video {
+            display: none;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
 
-    <div class="iframe-wrapper">
-        <div class="overlay" onclick="window.location.href='https://youtu.be/ewwYxo6-wRE?si=KnRQdsl6GKZBhzrj';"></div>
-        
-        <iframe src="https://www.skolavdf.cz/" frameborder="0"></iframe>
-    </div>
+<div class="iframe-wrapper">
+    <div class="overlay" onclick="playVideo()"></div>
+    <iframe src="https://www.skolavdf.cz/" frameborder="0"></iframe>
+    <video id="myVideo" src="bigboss.mp4" controls></video>
+</div>
+
+<script>
+    function playVideo() {
+        const video = document.getElementById("myVideo");
+        const overlay = document.querySelector(".overlay");
+
+        document.querySelector("iframe").style.display = "none";
+        overlay.style.display = "none";
+        video.style.display = "block";
+
+        video.play();
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+        }
+    }
+
+    window.onbeforeunload = function () {
+        return "Chcete opravdu zavřít?";
+    };
+</script>
 
 </body>
 </html>
